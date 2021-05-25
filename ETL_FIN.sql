@@ -1,6 +1,6 @@
--- ÇÀÃĞÓÆÀÅÌ ÄÀÍÍÛÅ Â ÒÀÁËÈÖÓ SOURCE_TRANSACTIONS
+-- Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ•Ğœ Ğ”ĞĞĞĞ«Ğ• Ğ’ Ğ¢ĞĞ‘Ğ›Ğ˜Ğ¦Ğ£ SOURCE_TRANSACTIONS
 
--- ÇÀÃĞÓÆÀÅÌ Â ÌÅÒÓ ÏÅĞÂÓŞ ÄÀÒÓ, ÅÑËÈ ÌÅÒÀ ÍÅ ÇÀÏÎËÍÅÍÀ
+-- Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ•Ğœ Ğ’ ĞœĞ•Ğ¢Ğ£ ĞŸĞ•Ğ Ğ’Ğ£Ğ® Ğ”ĞĞ¢Ğ£, Ğ•Ğ¡Ğ›Ğ˜ ĞœĞ•Ğ¢Ğ ĞĞ• Ğ—ĞĞŸĞĞ›ĞĞ•ĞĞ
 
 insert into META_INCREMENT
  select 'CHUVATKIN', 'STG_INCREMENT', to_date('01.01.1800', 'dd.mm.yyyy') from dual
@@ -9,11 +9,11 @@ insert into META_INCREMENT
  select 1 from meta_increment
  where db_name='CHUVATKIN' and tbl_name='STG_INCREMENT');
  
--- ×ÈÑÒÈÌ ÑÒÅÉÄÆÈÍÃ
+-- Ğ§Ğ˜Ğ¡Ğ¢Ğ˜Ğœ Ğ¡Ğ¢Ğ•Ğ™Ğ”Ğ–Ğ˜ĞĞ“
 
 delete stg_increment;
 
--- ÇÀÃĞÓÆÀÅÌ ÄÀÍÍÛÅ Â STG_INCREMENT
+-- Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ•Ğœ Ğ”ĞĞĞĞ«Ğ• Ğ’ STG_INCREMENT
 insert into stg_increment
   select trim(trans_id)
   , to_date(trans_date, 'dd.mm.yyyy hh24:mi:ss') as trans_date
@@ -41,12 +41,9 @@ insert into stg_increment
                 where db_name = 'CHUVATKIN'
                 and tbl_name = 'STG_INCREMENT'
                 );    
-               
+          
 
--- TRIGGER dim_terminals_hist
-
-
--- MERGE ÄËß ÇÀÊĞÛÒÈß ÏĞÅÄÛÄÓÙÅÉ ÂÅĞÑÈÈ È ÇÀÃĞÓÇÊÈ ÒÅÕ ÇÀÏÈÑÅÉ ÊÎÒÎĞÛÕ ÍÅÒ Â ÕĞÀÍÈËÈÙÅ dim_terminals_hist
+-- MERGE Ğ”Ğ›Ğ¯ Ğ—ĞĞšĞ Ğ«Ğ¢Ğ˜Ğ¯ ĞŸĞ Ğ•Ğ”Ğ«Ğ”Ğ£Ğ©Ğ•Ğ™ Ğ’Ğ•Ğ Ğ¡Ğ˜Ğ˜ Ğ˜ Ğ—ĞĞ“Ğ Ğ£Ğ—ĞšĞ˜ Ğ¢Ğ•Ğ¥ Ğ—ĞĞŸĞ˜Ğ¡Ğ•Ğ™ ĞšĞĞ¢ĞĞ Ğ«Ğ¥ ĞĞ•Ğ¢ Ğ’ Ğ¥Ğ ĞĞĞ˜Ğ›Ğ˜Ğ©Ğ• dim_terminals_hist
 
 merge into dim_terminals_hist dth
 using (
@@ -86,7 +83,7 @@ then insert (
     , to_date('31.12.2999', 'DD.MM.YYYY')
 );
 
--- INSERT ÍÎÂÎÉ ÂÅĞÑÈÈ ÇÀÏÈÑÈ ÄËß dim_terminals_hist
+-- INSERT ĞĞĞ’ĞĞ™ Ğ’Ğ•Ğ Ğ¡Ğ˜Ğ˜ Ğ—ĞĞŸĞ˜Ğ¡Ğ˜ Ğ”Ğ›Ğ¯ dim_terminals_hist
 insert into dim_terminals_hist (
   terminal_id
   , terminal_type
@@ -105,29 +102,8 @@ insert into dim_terminals_hist (
   left join dim_terminals_hist dth
   on stg.terminal=dth.terminal_id
   where stg.trans_date = dth.terminal_end_dt;
-  
--- TRIGGER ÄËß ÊËÈÅÍÒÎÂ
 
-CREATE OR REPLACE TRIGGER TR_dim_clients_hist_A_U
-AFTER
-UPDATE OF client_end_dt
-ON dim_clients_hist
-BEGIN
-INSERT INTO dim_clients_hist
-SELECT client
-  , last_name
-  , first_name
-  , patronymic
-  , date_of_birth
-  , passport
-  , passport_valid_to
-  , phone
-  , trans_date
-  , to_date('31.12.2999', 'DD.MM.YYYY') 
-  FROM STG_INCREMENT;
-END;
-
--- MERGE ÄËß ÒÀÁËÈÖÛ ÊËÈÅÍÒÎÂ SCD2, ÂÅĞÑÈÎÍÍÎÑÒÜ ÏĞÎÂÅĞßÅÒÑß ÏÎ ÂÑÅÌ ÏÎËßÌ
+-- MERGE Ğ”Ğ›Ğ¯ Ğ¢ĞĞ‘Ğ›Ğ˜Ğ¦Ğ« ĞšĞ›Ğ˜Ğ•ĞĞ¢ĞĞ’ SCD2, Ğ’Ğ•Ğ Ğ¡Ğ˜ĞĞĞĞĞ¡Ğ¢Ğ¬ ĞŸĞ ĞĞ’Ğ•Ğ Ğ¯Ğ•Ğ¢Ğ¡Ğ¯ ĞŸĞ Ğ’Ğ¡Ğ•Ğœ ĞŸĞĞ›Ğ¯Ğœ
 
 merge into dim_clients_hist dch
 using (
@@ -195,7 +171,7 @@ when not matched
   , to_date('31.12.2999', 'DD.MM.YYYY')
 );
 select * from dim_clients_hist
--- INSERT ÍÎÂÎÉ ÂÅĞÑÈÈ ÇÀÏÈÑÈ ÊËÈÅÍÒÎÂ
+-- INSERT ĞĞĞ’ĞĞ™ Ğ’Ğ•Ğ Ğ¡Ğ˜Ğ˜ Ğ—ĞĞŸĞ˜Ğ¡Ğ˜ ĞšĞ›Ğ˜Ğ•ĞĞ¢ĞĞ’
 insert into dim_clients_hist (
   client_id
   , last_name
@@ -223,7 +199,7 @@ insert into dim_clients_hist (
   on stg.client=dch.client_id 
   where stg.trans_date = dch.client_end_dt;
 
--- MERGE ÄËß ÒÀÁËÈÖÛ ÀÊÊÀÓÍÒ - (ÑÌÅÍÀ ÂËÀÄÅËÜÖÀ Ñ×ÅÒÀ ÈËÈ ÈÇÌÅÍÅÍÈÅ ÄÀÒÛ ÎÊÎÍ×ÀÍÈß Ñ×ÅÒÀ) 
+-- MERGE Ğ”Ğ›Ğ¯ Ğ¢ĞĞ‘Ğ›Ğ˜Ğ¦Ğ« ĞĞšĞšĞĞ£ĞĞ¢ - (Ğ¡ĞœĞ•ĞĞ Ğ’Ğ›ĞĞ”Ğ•Ğ›Ğ¬Ğ¦Ğ Ğ¡Ğ§Ğ•Ğ¢Ğ Ğ˜Ğ›Ğ˜ Ğ˜Ğ—ĞœĞ•ĞĞ•ĞĞ˜Ğ• Ğ”ĞĞ¢Ğ« ĞĞšĞĞĞ§ĞĞĞ˜Ğ¯ Ğ¡Ğ§Ğ•Ğ¢Ğ) 
 
 merge into dim_accounts_hist dah
 using (
@@ -264,7 +240,7 @@ then insert (
   , to_date('31.12.2999', 'DD.MM.YYYY')
 );
 
--- INSERT ÍÎÂÎÉ ÂÅĞÑÈÈ ÇÀÏÈÑÈ ACCOUNTS
+-- INSERT ĞĞĞ’ĞĞ™ Ğ’Ğ•Ğ Ğ¡Ğ˜Ğ˜ Ğ—ĞĞŸĞ˜Ğ¡Ğ˜ ACCOUNTS
 
 insert into dim_accounts_hist (
   account_num
@@ -284,7 +260,7 @@ insert into dim_accounts_hist (
   where stg.trans_date = dah.account_end_dt;
 
 
--- MERGE ÄËß CARDS ÅÑËÈ Ó Ñ×ÅÒÀ ÏÎÌÅÍßËÑß ÍÎÌÅĞ ÊÀĞÒÛ
+-- MERGE Ğ”Ğ›Ğ¯ CARDS Ğ•Ğ¡Ğ›Ğ˜ Ğ£ Ğ¡Ğ§Ğ•Ğ¢Ğ ĞŸĞĞœĞ•ĞĞ¯Ğ›Ğ¡Ğ¯ ĞĞĞœĞ•Ğ  ĞšĞĞ Ğ¢Ğ«
 
 merge into dim_cards_hist dh
 using (
@@ -319,7 +295,7 @@ then insert (
   , to_date('31.12.2999', 'DD.MM.YYYY')
 );
 
--- ÇÀÃĞÓÇÊÀ ÂÅĞÑÈÎÍÍÛÕ ÇÀÏÈÑÅÉ ÄËß dim_cards_hist
+-- Ğ—ĞĞ“Ğ Ğ£Ğ—ĞšĞ Ğ’Ğ•Ğ Ğ¡Ğ˜ĞĞĞĞ«Ğ¥ Ğ—ĞĞŸĞ˜Ğ¡Ğ•Ğ™ Ğ”Ğ›Ğ¯ dim_cards_hist
 
 insert into dim_cards_hist (
   card_num
@@ -336,7 +312,7 @@ insert into dim_cards_hist (
     on stg.account=dh.account_num
   where stg.trans_date = dh.card_end_dt;
 
--- ÇÀÃĞÓÆÀÅÌ ÄÀÍÍÛÅ Â ÒÀÁËÈÖÓ ÔÀÊÒ_ÒĞÀÍÇÀÊÖÈÈ
+-- Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ•Ğœ Ğ”ĞĞĞĞ«Ğ• Ğ’ Ğ¢ĞĞ‘Ğ›Ğ˜Ğ¦Ğ£ Ğ¤ĞĞšĞ¢_Ğ¢Ğ ĞĞĞ—ĞĞšĞ¦Ğ˜Ğ˜
 insert into fact_transactions ( 
   trans_id
   , trans_date
@@ -355,7 +331,7 @@ insert into fact_transactions (
   , terminal
 from stg_increment;
 
--- ÎÁÍÎÂËßÅÌ meta_increment
+-- ĞĞ‘ĞĞĞ’Ğ›Ğ¯Ğ•Ğœ meta_increment
 update meta_increment set last_dt_transaction = (select max(trans_date) from stg_increment);
 
 commit;
