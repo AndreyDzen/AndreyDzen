@@ -1,5 +1,3 @@
--- ЗАГРУЖАЕМ ДАННЫЕ В ТАБЛИЦУ SOURCE_TRANSACTIONS
-
 -- ЗАГРУЖАЕМ В МЕТУ ПЕРВУЮ ДАТУ, ЕСЛИ МЕТА НЕ ЗАПОЛНЕНА
 
 insert into META_INCREMENT
