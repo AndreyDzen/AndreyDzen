@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @AndreyDzen
-- 👀 I’m interested in SQL, PL/SQL, JAVA, Python
-- 🌱 I’m currently learning JAVA
+- 👀 I’m interested in SQL, PL/SQL, Python
+- 🌱 I’m currently learning Python
 - 📫 How to reach me chyvatkin16@gmail.com
 
 <!---
