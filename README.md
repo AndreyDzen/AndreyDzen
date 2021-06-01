@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @AndreyDzen
-- 👀 I’m interested in SQL, PL/SQL, JAVA
+- 👀 I’m interested in SQL, PL/SQL, JAVA, Python
 - 🌱 I’m currently learning JAVA
 - 📫 How to reach me chyvatkin16@gmail.com
 
