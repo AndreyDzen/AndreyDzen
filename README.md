@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @AndreyDzen
-- 👀 I’m interested in SQL, PL/SQL, Python
-- 🌱 I’m currently learning Python
-- 📫 How to reach me chyvatkin16@gmail.com
+- 👀 I’m interested 
+- 🌱 I’m currently 
+- 📫 How to reach me 
 
 <!---
 AndreyDzen/AndreyDzen is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
